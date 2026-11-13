@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloom Valley</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #e9f4df;
+  color: #405b42;
+}
+
+header {
+  background: #6b9d62;
+  color: white;
+  text-align: center;
+  padding: 18px;
+}
+
+header h1 { margin: 0; }
+header p { margin-bottom: 0; }
+
+.stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 15px;
+}
+
+.stat {
+  background: white;
+  border-radius: 12px;
+  padding: 12px 20px;
+  box-shadow: 0 3px 8px #0001;
+  font-weight: bold;
+}
+
+.container {
+  max-width: 850px;
+  margin: auto;
+  padding: 10px;
+}
+
+.panel {
+  background: white;
+  border-radius: 15px;
+  padding: 17px;
+  margin-bottom: 15px;
+  box-shadow: 0 3px 10px #0001;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 19px;
+}
+
+.garden {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 9px;
+}
+
+.plot {
+  aspect-ratio: 1;
+  border: 3px solid #a4774f;
+  background: #bd895d;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: clamp(23px, 6vw, 38px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: white;
+}
+
+.plot:hover { filter: brightness(1.08); }
+
+.plot small {
+  font-size: 10px;
+  margin-top: 3px;
+  color: white;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 11px 15px;
+  background: #79a96c;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover { filter: brightness(.92); }
+
+button.selected {
+  background: #e4a64c;
+  outline: 3px solid #f7d99d;
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.seed {
+  background: #f2f7ec;
+  color: #405b42;
+  border: 2px solid #dce9d3;
+}
+
+#message {
+  min-height: 25px;
+  text-align: center;
+  font-weight: bold;
+  color: #64915c;
+  margin-top: 12px;
+}
+
+.shop-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.inventory {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.inventory span {
+  background: #edf5e8;
+  padding: 9px 12px;
+  border-radius: 9px;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #789174;
+  font-size: 12px;
+}
+
+@media(max-width: 450px) {
+  .garden { gap: 5px; }
+  .plot { border-width: 2px; }
+  .stat { padding: 10px; font-size: 13px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🌷 Bloom Valley</h1>
+  <p>Your little garden, your happy place.</p>
+</header>
+
+<div class="stats">
+  <div class="stat">🪙 Coins: <span id="coins">100</span></div>
+  <div class="stat">🌱 Seeds: <span id="seeds">5</span></div>
+  <div class="stat">🌻 Harvest: <span id="harvestCount">0</span></div>
+</div>
+
+<div class="container">
+
+  <section class="panel">
+    <h2>🌿 My Garden</h2>
+    <p>Tekan petak kebun untuk menanam, menyiram, atau memanen.</p>
+    <div class="garden" id="garden"></div>
+    <div id="message">Selamat datang di kebunmu! 🌼</div>
+  </section>
+
+  <section class="panel">
+    <h2>🧺 Garden Tools</h2>
+    <div class="buttons">
+      <button id="plantBtn" onclick="setMode('plant')">🌱 Plant</button>
+      <button id="waterBtn" onclick="setMode('water')">💧 Water</button>
+      <button id="harvestBtn" onclick="setMode('harvest')">🧺 Harvest</button>
+    </div>
+    <p id="modeText">Mode: Plant</p>
+  </section>
+
+  <section class="panel">
+    <h2>🌼 Seed Selection</h2>
+    <div class="buttons" id="seedSelection"></div>
+  </section>
+
+  <section class="panel">
+    <h2>🏪 Seed Shop</h2>
+    <div id="shop"></div>
+  </section>
+
+  <section class="panel">
+    <h2>💰 Sell Your Harvest</h2>
+    <div class="inventory" id="inventory"></div>
+    <br>
+    <button onclick="sellAll()">Sell All Harvests 🪙</button>
+  </section>
+
+</div>
+
+<footer>Bloom Valley • Grow, harvest, and enjoy your garden ♡</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
+
